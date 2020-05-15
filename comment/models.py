@@ -3,13 +3,12 @@ from django.conf import settings
 from django.utils import timezone
 
 # Create your models here.
-class Account(models.Model):
+
+class Comment(models.Model):
 	name       = models.CharField(max_length = 50)
-	email      = models.CharField(max_length = 100, unique=True)
-	password   = models.CharField(max_length = 300)
+	content       = models.CharField(max_length = 3000)
 	created_at = models.DateTimeField(auto_now_add = True)
 	updated_at = models.DateTimeField(auto_now = True)
-	
-	class Meta:
-		db_table = 'account_account'
 
+	class Meta:
+		db_table = 'comment'
