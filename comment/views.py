@@ -4,9 +4,7 @@ from django.views import View
 from django.http  import JsonResponse, HttpResponse
 
 from .models      import Comment
-
 from account.models import Account
-
 
 class CommentView(View):
 	def post(self, request):
@@ -15,22 +13,13 @@ class CommentView(View):
 			if Account.objects.filter(name = data['name']).exists():
 				Comment.objects.create(
 						name		= data['name'],
-						contents	= data['contents'],
+						content		= data['content'],
 				).save()
-
 				return HttpResponse(status=200)
-			return JsonResponse({"message":"SIGN_UP_FIRST"}, status=400)
-		#	return JsonResponse({"message":"TRY_AGAIN"}, status=401)
+			return JsonResponse({"message":"USER_NAME_NOT_FOUND"}, status=400)
 		except KeyError:
-			return JsonResponse({"message":"NO_DATA_ENTERED"}, status=405)
-
-		except Account.DoesNotExist:
-			return JsonResponse({"message":"SIGN_UP_FIRST"}, status=404)
+			return JsonResponse({"message":"INVALID_KEY"}, status=401)
 
 	def get(self, request):
 		comment_data = Comment.objects.values()
-
-		if len(comment_data)==0:
-			return JsonResponse({'Message':'NO_COMMENTS'}, status=404)
-
 		return JsonResponse({'Comment':list(comment_data)},status=200)

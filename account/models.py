@@ -1,6 +1,4 @@
 from django.db import models
-from django.conf import settings
-from django.utils import timezone
 
 class Account(models.Model):
 	name       = models.CharField(max_length = 50)
@@ -10,5 +8,5 @@ class Account(models.Model):
 	updated_at = models.DateTimeField(auto_now = True)
 	
 	class Meta:
-		db_table = 'account_account'
+		db_table = 'accounts'
 
