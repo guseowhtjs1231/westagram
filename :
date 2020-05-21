@@ -12,11 +12,13 @@ class CommentView(View):
 	def post(self, request):
 		try:
 			data = json.loads(request.body)
-			Comment.objects.create(
-					user_id		= data['user_id'],
-					content		= data['content'],
+			if Account.objects.filter(user_id = data['user_id']).exists():
+				Comment.objects.create(
+						user_id		= data['user_id'],
+						content		= data['content'],
 				).save()
-			return HttpResponse(status=200)
+				return HttpResponse(status=200)
+			return JsonResponse({"message":"USER_ID_NOT_FOUND"}, status=400)
 		except KeyError:
 			return JsonResponse({"message":"INVALID_KEY"}, status=401)
 	@LoginConfirm

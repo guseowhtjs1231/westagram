@@ -1,0 +1,4 @@
+Django==3.0.5
+mysql
+django-cors-headers
+python@3.8
